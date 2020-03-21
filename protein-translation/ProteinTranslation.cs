@@ -15,7 +15,7 @@ UAA, UAG, UGA 	STOP
 public static class ProteinTranslation
 {
     enum AminoAcids {
-        Methionine, Phenylalanine, Leucine, Serine, Tyrosine, Cysteine
+        Methionine, Phenylalanine, Leucine, Serine, Tyrosine, Cysteine, Tryptophan
     }
     private static Dictionary<string, string> Codon = new Dictionary<string, string>{
         {"AUG", AminoAcids.Methionine.ToString()},
@@ -31,6 +31,7 @@ public static class ProteinTranslation
         {"UAC", AminoAcids.Tyrosine.ToString()},
         {"UGU", AminoAcids.Cysteine.ToString()},
         {"UGC", AminoAcids.Cysteine.ToString()},
+        {"UGG", AminoAcids.Tryptophan.ToString()},
     };
 
     public static string[] Proteins(string strand)
