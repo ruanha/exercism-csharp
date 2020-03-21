@@ -15,14 +15,18 @@ UAA, UAG, UGA 	STOP
 public static class ProteinTranslation
 {
     enum AminoAcids {
-        Methionine, Phenylalanine, Leucine
+        Methionine, Phenylalanine, Leucine, Serine,
     }
     private static Dictionary<string, string> Codon = new Dictionary<string, string>{
         {"AUG", AminoAcids.Methionine.ToString()},
         {"UUU", AminoAcids.Phenylalanine.ToString()},
         {"UUC", AminoAcids.Phenylalanine.ToString()},
         {"UUA", AminoAcids.Leucine.ToString()},
-        {"UUG", AminoAcids.Leucine.ToString()}
+        {"UUG", AminoAcids.Leucine.ToString()},
+        {"UCU", AminoAcids.Serine.ToString()},
+        {"UCC", AminoAcids.Serine.ToString()},
+        {"UCA", AminoAcids.Serine.ToString()},
+        {"UCG", AminoAcids.Serine.ToString()},
     };
 
     public static string[] Proteins(string strand)
