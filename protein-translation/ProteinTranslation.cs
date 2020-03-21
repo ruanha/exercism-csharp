@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 /*
 Codon 	Protein
@@ -17,9 +18,24 @@ public static class ProteinTranslation
         Methionine, Phenylalanine, Leucine, Serine,Tyrosine, Cysteine, Tryptophan, STOP
     }
 
+    private static Dictionary<string, string> Codon = new Dictionary<string, string>{
+        {"AUG", "Methionine"},
+        {"UUU", "Phenylalanine"}
+    };
+
     public static string[] Proteins(string strand)
     {
-        var result = new string[1]{"Methionine"};
+        List<string> codes = ChunkUp(strand, 3);
+        return codes
+            .Select(c => Codon[c])
+            .ToArray();
+    }
+
+    private static List<string> ChunkUp(string strand, int size) {
+        List<string> result = new List<string>();
+        for (int i = 0; i <= strand.Length - size; i += size) {
+            result.Add(strand.Substring(i, size));
+        }
         return result;
     }
 }
