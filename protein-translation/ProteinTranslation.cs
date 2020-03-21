@@ -27,7 +27,7 @@ public static class ProteinTranslation
     {
         List<string> codes = ChunkUp(strand, 3);
         return codes
-            .Select(c => Codon[c])
+            .Select(c => GetAminoAcidFrom(c))
             .ToArray();
     }
 
@@ -37,5 +37,8 @@ public static class ProteinTranslation
             result.Add(strand.Substring(i, size));
         }
         return result;
+    }
+    private static string GetAminoAcidFrom(string codon) {
+        return Codon[codon];
     }
 }
