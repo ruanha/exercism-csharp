@@ -25,6 +25,7 @@ public static class ProteinTranslation
         }
         return result;
     }
+    
     private static string GetAminoAcidFrom(string codon) {
         return Codon[codon];
     }
