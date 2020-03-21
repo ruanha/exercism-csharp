@@ -21,7 +21,8 @@ public static class ProteinTranslation
         {"AUG", AminoAcids.Methionine.ToString()},
         {"UUU", AminoAcids.Phenylalanine.ToString()},
         {"UUC", AminoAcids.Phenylalanine.ToString()},
-        {"UUA", AminoAcids.Leucine.ToString()}
+        {"UUA", AminoAcids.Leucine.ToString()},
+        {"UUG", AminoAcids.Leucine.ToString()}
     };
 
     public static string[] Proteins(string strand)
