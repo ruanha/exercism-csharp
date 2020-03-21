@@ -15,7 +15,7 @@ UAA, UAG, UGA 	STOP
 public static class ProteinTranslation
 {
     enum AminoAcids {
-        Methionine, Phenylalanine, Leucine, Serine, Tyrosine, Cysteine, Tryptophan
+        Methionine, Phenylalanine, Leucine, Serine, Tyrosine, Cysteine, Tryptophan, STOP
     }
     private static Dictionary<string, string> Codon = new Dictionary<string, string>{
         {"AUG", AminoAcids.Methionine.ToString()},
@@ -32,14 +32,25 @@ public static class ProteinTranslation
         {"UGU", AminoAcids.Cysteine.ToString()},
         {"UGC", AminoAcids.Cysteine.ToString()},
         {"UGG", AminoAcids.Tryptophan.ToString()},
+        {"UAA", AminoAcids.STOP.ToString()},
+        {"UAG", AminoAcids.STOP.ToString()},
+        {"UGA", AminoAcids.STOP.ToString()},
     };
 
     public static string[] Proteins(string strand)
     {
-        List<string> codes = ChunkUp(strand, 3);
-        return codes
-            .Select(c => GetAminoAcidFrom(c))
-            .ToArray();
+        List<string> chunk = ChunkUp(strand, 3);
+        List<string> result = new List<string>();
+        
+        foreach (string codon in chunk) {
+            string AA = GetAminoAcidFrom(codon);
+            if (AA != AminoAcids.STOP.ToString()) {
+                result.Add(AA);
+            } else {
+                break;
+            }
+        }
+        return result.ToArray();
     }
 
     private static List<string> ChunkUp(string strand, int size) {
