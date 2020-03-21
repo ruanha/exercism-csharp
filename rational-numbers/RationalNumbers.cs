@@ -31,9 +31,9 @@ public struct RationalNumber
         The sum of two rational numbers r1 = a1/b1 and r2 = a2/b2 is
          r1 + r2 = a1/b1 + a2/b2 = (a1 * b2 + a2 * b1) / (b1 * b2).
          */
-        return Reduced(
+        return new RationalNumber(
             r1.numerator * r2.denominator + r2.numerator * r1.denominator,
-            r1.denominator * r2.denominator);
+            r1.denominator * r2.denominator).Reduce();
     }
 
     public static RationalNumber operator -(RationalNumber r1, RationalNumber r2)
