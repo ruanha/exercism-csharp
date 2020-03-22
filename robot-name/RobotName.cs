@@ -7,14 +7,12 @@ public class Robot
     private string _name;
 
     public Robot() {
-        _name = GenerateName();
-        _names.Add(_name);
+        Reset();
     }
     public string Name { get => _name; }
     public void Reset()
     {
         _name = GenerateName();
-        _names.Remove(_name);
         _names.Add(_name);
     }
 
