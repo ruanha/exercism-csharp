@@ -17,13 +17,18 @@ public class Robot
     }
 
     private string GenerateName() {
-        return GenerateRandomLetter() + GenerateRandomLetter() + "123";
+        return GenerateRandomLetter() + GenerateRandomLetter() + GenerateRandomNumeric();
     }
 
     private string GenerateRandomLetter() {
         Random random = new Random();
         var r = random.Next(UpperCaseLetters.Length);
         return UpperCaseLetters[r].ToString();
+    }
+
+    private string GenerateRandomNumeric() {
+        Random random = new Random();
+        return random.Next(100, 1000).ToString();
     }
 
     public void Reset()
