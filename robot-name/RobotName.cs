@@ -5,6 +5,7 @@ public class Robot
 {
     private static HashSet<string> _names = new HashSet<string>();
     private string _name;
+    private Random random = new Random();
 
     public Robot() {
         Reset();
@@ -26,13 +27,11 @@ public class Robot
 
     private string GenerateRandomLetter() {
         const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";;
-        Random random = new Random();
         var r = random.Next(letters.Length);
         return letters[r].ToString();
     }
 
     private string GenerateRandomNumeric() {
-        Random random = new Random();
         return random.Next(100, 1000).ToString();
     }
 }
