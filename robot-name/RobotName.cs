@@ -29,7 +29,7 @@ public class Robot
         const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         string result = "";
         for (int i = 0; i < length; i++) {
-            result += letters[random.Next(letters.Length)].ToString();
+            result += letters[random.Next(letters.Length)];
         }
         return result;
     }
