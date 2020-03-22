@@ -33,6 +33,6 @@ public class Robot
 
     public void Reset()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        _name = GenerateName();
     }
 }
