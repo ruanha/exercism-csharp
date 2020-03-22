@@ -10,18 +10,19 @@ public class Robot
     public Robot() {
         Reset();
     }
+
     public void Reset()
     {
-        Name = GenerateName();
+        Name = UniqueName();
         Names.Add(Name);
     }
 
-    private string GenerateName() {
-        var suggestedName = GenerateRandomLetters(2) + GenerateRandomNumeric();
+    private string UniqueName() {
+        var suggestedName = GenerateRandomLetters(2) + GenerateRandomNumerics(3);
         if (!Robot.Names.Contains(suggestedName)) {
             return suggestedName;
         }
-        return GenerateName();
+        return UniqueName();
     }
 
     private string GenerateRandomLetters(int length) {
@@ -33,7 +34,11 @@ public class Robot
         return result;
     }
 
-    private string GenerateRandomNumeric() {
-        return random.Next(100, 1000).ToString();
+    private string GenerateRandomNumerics(int length) {
+        string result = "";
+        for (int i = 0; i < length; i++) {
+            result += random.Next(0, 10).ToString();
+        }
+        return result;
     }
 }
