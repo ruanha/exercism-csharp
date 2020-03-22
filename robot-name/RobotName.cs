@@ -3,23 +3,22 @@ using System.Collections.Generic;
 
 public class Robot
 {
-    private static HashSet<string> _names = new HashSet<string>();
+    private static HashSet<string> Names = new HashSet<string>();
     private Random random = new Random();
-    private string _name;
-    public string Name { get => _name; }
+    public string Name { get; private set; }
 
     public Robot() {
         Reset();
     }
     public void Reset()
     {
-        _name = GenerateName();
-        _names.Add(_name);
+        Name = GenerateName();
+        Names.Add(Name);
     }
 
     private string GenerateName() {
         var suggestedName = GenerateRandomLetters(2) + GenerateRandomNumeric();
-        if (!Robot._names.Contains(suggestedName)) {
+        if (!Robot.Names.Contains(suggestedName)) {
             return suggestedName;
         }
         return GenerateName();
