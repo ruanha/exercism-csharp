@@ -4,13 +4,13 @@ using System.Collections.Generic;
 public class Robot
 {
     private static HashSet<string> _names = new HashSet<string>();
-    private string _name;
     private Random random = new Random();
+    private string _name;
+    public string Name { get => _name; }
 
     public Robot() {
         Reset();
     }
-    public string Name { get => _name; }
     public void Reset()
     {
         _name = GenerateName();
