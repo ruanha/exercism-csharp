@@ -1,8 +1,10 @@
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 public class Robot
 {
+    static HashSet<string> _names = new HashSet<string>();
     private string _name;
     private string UpperCaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public Robot() {
@@ -17,7 +19,13 @@ public class Robot
     }
 
     private string GenerateName() {
-        return GenerateRandomLetter() + GenerateRandomLetter() + GenerateRandomNumeric();
+        var suggestedName = GenerateRandomLetter() + GenerateRandomLetter() + GenerateRandomNumeric();
+        if (!Robot._names.Contains(suggestedName)) {
+            Console.WriteLine(suggestedName);
+            _names.Add(suggestedName);
+            return suggestedName;
+        }
+        return GenerateName();
     }
 
     private string GenerateRandomLetter() {
