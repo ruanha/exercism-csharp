@@ -21,7 +21,6 @@ public class Robot
     private string GenerateName() {
         var suggestedName = GenerateRandomLetter() + GenerateRandomLetter() + GenerateRandomNumeric();
         if (!Robot._names.Contains(suggestedName)) {
-            Console.WriteLine(suggestedName);
             _names.Add(suggestedName);
             return suggestedName;
         }
