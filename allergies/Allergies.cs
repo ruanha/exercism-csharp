@@ -1,17 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-/*
-1  = 0000 0001
-2  = 0000 0010
-4  = 0000 0100
-8  = 0000 1000
-16 = 0001 0000
-32 = 0010 0000
-64 = 0100 0000
-128= 1000 0000
-*/
-
 public enum Allergen
 {
     Eggs = 1,
@@ -26,7 +15,7 @@ public enum Allergen
 
 public class Allergies
 {
-    private int Mask;
+    private readonly int Mask;
     public Allergies(int mask)
     {
         Mask = mask;
@@ -41,10 +30,12 @@ public class Allergies
     public Allergen[] List()
     {
         List<Allergen> result = new List<Allergen>();
-        var allergens = Enum.GetValues(typeof(Allergen));
+
+        Array allergens = Enum.GetValues(typeof(Allergen));
+
         foreach (Allergen allergen in allergens) {
-            if ( (Mask & (byte)allergen) == (byte)allergen )
-            result.Add(allergen);
+            if (IsAllergicTo(allergen)) 
+                result.Add(allergen);
         }
         return result.ToArray();
     }
