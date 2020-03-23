@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 /*
 1  = 0000 0001
@@ -39,6 +40,12 @@ public class Allergies
 
     public Allergen[] List()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        List<Allergen> result = new List<Allergen>();
+        var allergens = Enum.GetValues(typeof(Allergen));
+        foreach (Allergen allergen in allergens) {
+            if ( (Mask & (byte)allergen) == (byte)allergen )
+            result.Add(allergen);
+        }
+        return result.ToArray();
     }
 }
