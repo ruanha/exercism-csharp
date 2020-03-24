@@ -1,5 +1,8 @@
+# ignore all
 *
-!*.gitignore
-!*/
-!*.cs
-*Tests.cs
+
+# except the .cs files in directories
+!**/*.cs
+
+## but do ignore tests
+**/*Test.cs
