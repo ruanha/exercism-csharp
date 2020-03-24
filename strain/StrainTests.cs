@@ -10,32 +10,32 @@ public class StrainTests
         Assert.Equal(new LinkedList<int>(), new LinkedList<int>().Keep(x => x < 10));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Keep_everything()
     {
         Assert.Equal(new HashSet<int> { 1, 2, 3 }, new HashSet<int> { 1, 2, 3 }.Keep(x => x < 10));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Keep_first_and_last()
     {
         Assert.Equal(new[] { 1, 3 }, new[] { 1, 2, 3 }.Keep(x => x % 2 != 0));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Keep_neither_first_nor_last()
     {
         Assert.Equal(new List<int> { 2, 4 }, new List<int> { 1, 2, 3, 4, 5 }.Keep(x => x % 2 == 0));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Keep_strings()
     {
         var words = "apple zebra banana zombies cherimoya zelot".Split(' ');
         Assert.Equal("zebra zombies zelot".Split(' '), words.Keep(x => x.StartsWith("z")));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Keep_arrays()
     {
         var actual = new[]
@@ -52,7 +52,7 @@ public class StrainTests
         Assert.Equal(expected, actual.Keep(x => x.Contains(5)));
     }
 
-    [Fact(Skip = "Remove to run test")]
+    [Fact]
     public void Empty_discard()
     {
         Assert.Equal(new LinkedList<int>(), new LinkedList<int>().Discard(x => x < 10));
