@@ -8,5 +8,5 @@ public static class Strain
         collection.Where(x => predicate(x));
 
     public static IEnumerable<T> Discard<T>(this IEnumerable<T> collection, Func<T, bool> predicate) =>
-    collection.Where(x => !predicate(x));
+        collection.Where(x => !predicate(x));
 }
