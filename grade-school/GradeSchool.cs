@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class GradeSchool
 {
-    private List<Student> _roster = new List<Student>();
+    private List<Student> RosterList = new List<Student>();
 
-    public class Student{
+    private class Student{
         public readonly string Name;
         public readonly int Grade;
         public Student(string name, int grade) {
@@ -17,18 +17,18 @@ public class GradeSchool
 
     public void Add(string student, int grade)
     {
-        _roster.Add(new Student(student, grade));
-        _roster = _roster
+        RosterList.Add(new Student(student, grade));
+        RosterList = RosterList
             .OrderBy (s => s.Grade)
             .ThenBy  (s => s.Name)
             .ToList  ();
     }
 
     public IEnumerable<string> Roster() =>
-        _roster.Select(s => s.Name).ToArray();
+        RosterList.Select(s => s.Name).ToArray();
 
     public IEnumerable<string> Grade(int grade) =>
-        _roster
+        RosterList
             .Where   (s => s.Grade == grade)
             .Select  (s => s.Name)
             .ToArray ();
