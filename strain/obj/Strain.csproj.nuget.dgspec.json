@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rune_\\Exercism\\csharp\\strain\\Strain.csproj": {}
+    "C:\\Users\\rune_\\Exercism\\exercism-csharp\\strain\\Strain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rune_\\Exercism\\csharp\\strain\\Strain.csproj": {
+    "C:\\Users\\rune_\\Exercism\\exercism-csharp\\strain\\Strain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rune_\\Exercism\\csharp\\strain\\Strain.csproj",
+        "projectUniqueName": "C:\\Users\\rune_\\Exercism\\exercism-csharp\\strain\\Strain.csproj",
         "projectName": "Strain",
-        "projectPath": "C:\\Users\\rune_\\Exercism\\csharp\\strain\\Strain.csproj",
+        "projectPath": "C:\\Users\\rune_\\Exercism\\exercism-csharp\\strain\\Strain.csproj",
         "packagesPath": "C:\\Users\\rune_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rune_\\Exercism\\csharp\\strain\\obj\\",
+        "outputPath": "C:\\Users\\rune_\\Exercism\\exercism-csharp\\strain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rune_\\AppData\\Roaming\\NuGet\\NuGet.Config"
