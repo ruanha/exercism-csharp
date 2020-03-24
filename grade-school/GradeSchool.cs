@@ -24,10 +24,8 @@ public class GradeSchool
             .ToList  ();
     }
 
-    public IEnumerable<string> Roster()
-    {
-        return _roster.Select(s => s.Name).ToArray();
-    }
+    public IEnumerable<string> Roster() =>
+        _roster.Select(s => s.Name).ToArray();
 
     public IEnumerable<string> Grade(int grade) =>
         _roster
