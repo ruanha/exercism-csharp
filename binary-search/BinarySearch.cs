@@ -17,6 +17,9 @@ public static class BinarySearch
             if (input[index] > value) {
                 index = (lower + index) / 2;
             }
+            else {
+                index = index + (upper - index) / 2;
+            }
         }
 
         return index;
