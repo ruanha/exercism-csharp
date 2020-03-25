@@ -13,17 +13,17 @@ public static class BinarySearch
         int lower = 0;
         int upper = input.Length;
 
-        while (input[index] != value) {
+        while (input[index] != value && upper != lower) {
             if (input[index] > value) {
-                upper = index - 1;
+                upper = index;
                 index = (lower + index) / 2;
             }
             else {
                 lower = index + 1;
-                index = index + (upper - index);
+                index = (index + upper) / 2;
             }
         }
 
-        return index;
+        return input[index] == value ? index : -1;
     }
 }
