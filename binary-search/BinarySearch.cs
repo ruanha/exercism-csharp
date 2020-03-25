@@ -5,15 +5,11 @@ public static class BinarySearch
 {
     public static int Find(int[] input, int value)
     {
-        if (input.Length == 0) {
-            return -1;
-        }
-
         int index = input.Length / 2;
         int lower = 0;
         int upper = input.Length;
 
-        while (input[index] != value && upper != lower) {
+        while (upper != lower && input[index] != value) {
             if (input[index] > value) {
                 upper = index;
                 index = (lower + index) / 2;
@@ -23,7 +19,7 @@ public static class BinarySearch
                 index = (index + upper) / 2;
             }
         }
-
+        if (input.Length == 0) return -1;
         return input[index] == value ? index : -1;
     }
 }
