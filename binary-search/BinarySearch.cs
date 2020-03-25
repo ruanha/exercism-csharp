@@ -10,9 +10,13 @@ public static class BinarySearch
         }
 
         int index = input.Length / 2;
+        int lower = 0;
+        int upper = input.Length;
 
         while (input[index] != value) {
-            
+            if (input[index] > value) {
+                index = (lower + index) / 2;
+            }
         }
 
         return index;
