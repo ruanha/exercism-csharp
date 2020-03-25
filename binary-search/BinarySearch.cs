@@ -15,10 +15,12 @@ public static class BinarySearch
 
         while (input[index] != value) {
             if (input[index] > value) {
+                upper = index - 1;
                 index = (lower + index) / 2;
             }
             else {
-                index = index + (upper - index) / 2;
+                lower = index + 1;
+                index = index + (upper - index);
             }
         }
 
