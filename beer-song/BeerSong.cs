@@ -18,9 +18,9 @@ public static class BeerSong
                 result += "No more bottles of beer on the wall, no more bottles of beer.\n" +
                 "Go to the store and buy some more, 99 bottles of beer on the wall.";
             }
-            
             numberOfBottles--;
             takeDown--;
+            if (takeDown > 0) result += "\n\n";
         }
         return result;
     }
