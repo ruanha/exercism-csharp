@@ -5,9 +5,10 @@ using System.Collections.Generic;
 public class Matrix
 {
     public List<int[]> _rows = new List<int[]>();
+
     public Matrix(string input)
     {
-        var rowsAsStrings = input
+        string[] rowsAsStrings = input
             .Split("\n");
         
         foreach (string row in rowsAsStrings) {
@@ -39,6 +40,10 @@ public class Matrix
 
     public int[] Column(int col)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        var result = new List<int>();
+        foreach (int[] row in _rows) {
+            result.Add(row[col - 1]);
+        }
+        return result.ToArray();
     }
 }
