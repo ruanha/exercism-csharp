@@ -1,10 +1,19 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 
 public class Matrix
 {
+    public List<int[]> _rows = new List<int[]>();
     public Matrix(string input)
     {
-
+        var rowsAsStrings = input
+            .Split("\n");
+        
+        foreach (string row in rowsAsStrings) {
+            int[] arr = row.Split(" ").Select(x => int.Parse(x)).ToArray();
+            _rows.Add(arr);
+        }
     }
 
     public int Rows
@@ -25,7 +34,7 @@ public class Matrix
 
     public int[] Row(int row)
     {
-        return new int[] {1};
+        return _rows[row - 1];
     }
 
     public int[] Column(int col)
