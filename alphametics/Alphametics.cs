@@ -13,6 +13,29 @@ public static class Alphametics
         return new Dictionary<char, int>();
     }
 
+    public static void Search(Matrix matrix, Matrix resultRow) {
+        // succes condition
+        if (IsSolved(matrix, resultRow)) {
+            return matrix;
+        }
+    }
+
+    private static bool IsSolved(Matrix matrix, Matrix resultRow) {
+        return matrix._rows.All(row => row.All(unit => unit.Values.Count == 1))
+            && resultRow.Row(0).All(unit => unit.Values.Count == 1);
+    }
+
+    private static Dictionary<string, int> ToResult(Matrix matrix, Matrix resultRow) {
+        var resultDict = new Dictionary<string, int>();
+        foreach (Unit unit in matrix._rows.SelectMany(row => row)) {
+            resultDict.TryAdd(unit.Letter.ToString(), unit.Values.First());
+        }
+        foreach (Unit unit in resultRow.Row(0).Select(unit => unit)) {
+            resultDict.TryAdd(unit.Letter.ToString(), unit.Values.First());
+        }
+        return resultDict;
+    } 
+
     public static void Print(Matrix matrix, Matrix resultRow) {
         Console.WriteLine("Print the matrix and result row");
         var numberOfRows = matrix.Column(0).Count();
@@ -48,7 +71,7 @@ public static class Alphametics
 
     public class Matrix
     {
-        private readonly List<Unit[]> _rows = new List<Unit[]>();
+        public readonly List<Unit[]> _rows = new List<Unit[]>();
 
         public Matrix(string input)
         {
