@@ -24,11 +24,15 @@ public static class Alphametics
 
     public static void Print(Matrix matrix) {
         Console.WriteLine("Print the matrix and result row");
-        Console.WriteLine("TEST OF ROWS: " + matrix.Row(0).ElementAt(0).Letter);
-        Console.WriteLine("value at (0,0): " + matrix.Cell(0,0).Letter);
-        Console.WriteLine("value at (0,1): " + matrix.Cell(0,1).Letter);
-        Console.WriteLine("value at (1,0): " + matrix.Cell(1,0).Letter);
-        Console.WriteLine("value at (1,1): " + matrix.Cell(1,1).Letter);
+        var numberOfRows = matrix.Column(0).Count();
+        var numberOfColumns = matrix.Row(0).Count();
+        for (int i = 0; i < numberOfRows; i++ ) {
+            for (int j = 0; j < numberOfColumns; j++) {
+                var l = matrix.Cell(i,j).Letter != null ? matrix.Cell(i,j).Letter.ToString() : " ";
+                Console.Write("|" + l);
+            }
+            Console.WriteLine("|");
+        }
     }
 
     public class Matrix
