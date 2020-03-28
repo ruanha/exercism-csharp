@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 
 public class Matrix
@@ -8,26 +7,16 @@ public class Matrix
 
     public Matrix(string input)
     {
-        string[] rowsAsStrings = input
-            .Split("\n");
-        
-        foreach (string row in rowsAsStrings) {
-            int[] arr = row.Split(" ").Select(x => int.Parse(x)).ToArray();
-            _rows.Add(arr);
-        }
+        _rows = input
+            .Split("\n")
+            .Select(row => row.Split(" ")
+                .Select(num => int.Parse(num))
+                .ToArray())
+            .ToList();
     }
 
-    public int[] Row(int row)
-    {
-        return _rows[row - 1];
-    }
+    public IEnumerable<int> Row(int row) => _rows[row - 1];
 
-    public int[] Column(int col)
-    {
-        var result = new List<int>();
-        foreach (int[] row in _rows) {
-            result.Add(row[col - 1]);
-        }
-        return result.ToArray();
-    }
+    public IEnumerable<int> Column(int col) => _rows
+        .Select(row => row[ col -1]);
 }
