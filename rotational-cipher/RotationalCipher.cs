@@ -9,6 +9,9 @@ public static class RotationalCipher
         text.Aggregate("", (result, letter) => result + Rotate(letter, shiftKey));
 
     private static char Rotate(char c, int shiftKey) {
+        if (!char.IsLetter(c))
+            return c;
+
         bool isUpper = char.IsUpper(c);
 
         var node = Alphabet.Find(char.ToLower(c));
