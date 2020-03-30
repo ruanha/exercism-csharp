@@ -6,13 +6,15 @@ public static class RotationalCipher
 {
     static LinkedList<char> Alphabet = new LinkedList<char>("abcdefghijklmnopqrstuvwxyz".ToCharArray());
     public static string Rotate(string text, int shiftKey) =>
-        text.Aggregate("", (current, next) => current + Rotate(next, shiftKey));
+        text.Aggregate("", (result, letter) => result + Rotate(letter, shiftKey));
 
     private static char Rotate(char c, int shiftKey) {
-        var node = Alphabet.Find(c);
+        bool isUpper = char.IsUpper(c);
+
+        var node = Alphabet.Find(char.ToLower(c));
         for (int i = 0; i < shiftKey; i++) {
             node = node.Next ?? Alphabet.First;
         }
-        return (char)(node.Value);
+        return isUpper ? char.ToUpper(((char)(node.Value))) : (char)(node.Value);
     }
 }
