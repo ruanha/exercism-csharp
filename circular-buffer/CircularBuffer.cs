@@ -8,7 +8,7 @@ public class CircularBuffer<T>
     public CircularBuffer(int capacity)
     {
         Capacity = capacity;
-        Storage = new Queue<T>();
+        Storage = new Queue<T>(capacity);
     }
 
     public T Read()
@@ -18,6 +18,9 @@ public class CircularBuffer<T>
 
     public void Write(T value)
     {
+        if (Storage.Count >= Capacity) {
+            throw new InvalidOperationException();
+        }
         Storage.Enqueue(value);
     }
 
@@ -28,6 +31,6 @@ public class CircularBuffer<T>
 
     public void Clear()
     {
-        throw new NotImplementedException("You need to implement this function.");
+        Storage.Clear();
     }
 }
