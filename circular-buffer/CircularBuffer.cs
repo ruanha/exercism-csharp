@@ -1,20 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 
 public class CircularBuffer<T>
 {
+    private Queue<T> Storage {get; set;}
+    readonly int Capacity;
     public CircularBuffer(int capacity)
     {
-        
+        Capacity = capacity;
+        Storage = new Queue<T>();
     }
 
     public T Read()
     {
-        throw new InvalidOperationException();
+        return Storage.Dequeue();
     }
 
     public void Write(T value)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        Storage.Enqueue(value);
     }
 
     public void Overwrite(T value)
