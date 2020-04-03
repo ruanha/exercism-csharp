@@ -3,22 +3,15 @@ using System.Collections.Generic;
 
 public class CircularBuffer<T>
 {
-    private Queue<T> Storage {get; set;}
+    private Queue<T> Storage = new Queue<T>();
     readonly int Capacity;
-    public CircularBuffer(int capacity)
-    {
-        Capacity = capacity;
-        Storage = new Queue<T>(capacity);
-    }
+    public CircularBuffer(int capacity) => Capacity = capacity;
 
-    public T Read()
-    {
-        return Storage.Dequeue();
-    }
+    public T Read() => Storage.Dequeue();
 
     public void Write(T value)
     {
-        if (Storage.Count >= Capacity) {
+        if (IsFull()) {
             throw new InvalidOperationException();
         }
         Storage.Enqueue(value);
@@ -26,11 +19,13 @@ public class CircularBuffer<T>
 
     public void Overwrite(T value)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        if (IsFull()) {
+            Storage.Dequeue();
+        }
+        Write(value);
     }
 
-    public void Clear()
-    {
-        Storage.Clear();
-    }
+    public void Clear() => Storage.Clear();
+
+    private bool IsFull() => Storage.Count >= Capacity;
 }
