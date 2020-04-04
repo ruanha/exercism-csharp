@@ -107,7 +107,7 @@ public static class Ledger
 
     private static string PrintEntry(LedgerEntry entry)
     {
-        var formatted = "";
+        var formatted = "\n";
         var date = Date(entry.Date);
         var description = Description(entry.Description);
         var change = Change(entry.Change);
@@ -137,13 +137,10 @@ public static class Ledger
     public static string Format(string currency, string locale, LedgerEntry[] entries)
     {
         CreateCulture(currency, locale);
-        
-        string formatted = PrintHead(locale);
-        foreach (var entry in sort(entries))
-        {
-            formatted += "\n" + PrintEntry(entry);
-        }
 
-        return formatted;
+        return PrintHead(locale) + PrintEntries(entries);
     }
+
+    private static string PrintEntries(LedgerEntry[] entries) =>
+        sort(entries).Select(x => PrintEntry(x)).Aggregate("", (agg, entry) => agg + entry);
 }
