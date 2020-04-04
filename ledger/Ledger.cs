@@ -122,17 +122,10 @@ public static class Ledger
     }
 
 
-    private static IEnumerable<LedgerEntry> sort(LedgerEntry[] entries)
-    {
-        var neg = entries.Where(e => e.Change < 0).OrderBy(x => x.Date + "@" + x.Description + "@" + x.Change);
-        var post = entries.Where(e => e.Change >= 0).OrderBy(x => x.Date + "@" + x.Description + "@" + x.Change);
-
-        var result = new List<LedgerEntry>();
-        result.AddRange(neg);
-        result.AddRange(post);
-
-        return result;
-    }
+    private static IEnumerable<LedgerEntry> sort(LedgerEntry[] entries) => entries
+        .OrderBy(e => e.Change)
+        .OrderBy(x => x.Date + "@" + x.Description + "@" + x.Change)
+        .ToArray();
 
     public static string Format(string currency, string locale, LedgerEntry[] entries)
     {
@@ -141,6 +134,7 @@ public static class Ledger
         return PrintHead(locale) + PrintEntries(entries);
     }
 
-    private static string PrintEntries(LedgerEntry[] entries) =>
-        sort(entries).Select(x => PrintEntry(x)).Aggregate("", (agg, entry) => agg + entry);
+    private static string PrintEntries(LedgerEntry[] entries) => sort(entries)
+        .Select(x => PrintEntry(x))
+        .Aggregate("", (agg, entry) => agg + entry);
 }
