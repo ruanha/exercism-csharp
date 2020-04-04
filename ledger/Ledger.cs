@@ -59,7 +59,8 @@ public static class Ledger
             _       => throw new ArgumentException("Invalid locale")
         };
 
-    private static string Date(DateTime date) => date.ToString("d", culture);
+    private static string Date(DateTime date) => 
+        date.ToString("d", culture);
 
     private static string Description(string description) =>
         description.Length > 25 ? description.Substring(0, 22) + "..." : description;
@@ -69,8 +70,6 @@ public static class Ledger
 
     private static string PrintEntry(LedgerEntry entry) =>
         $"\n{Date(entry.Date)} | {Description(entry.Description),-25} | {Change(entry.Change),13}";
-
-
 
     private static IEnumerable<LedgerEntry> sort(LedgerEntry[] entries) => entries
         .OrderBy(entry => entry.Change)
