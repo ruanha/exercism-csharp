@@ -149,26 +149,11 @@ public static class Ledger
 
    public static string Format(string currency, string locale, LedgerEntry[] entries)
     {
-        var formatted = "";
-        formatted += PrintHead(locale);
-
+        string formatted = PrintHead(locale);
         var culture = CreateCulture(currency, locale);
 
-        formatted = PrintEntries(entries, formatted, culture);
-
-        return formatted;
-    }
-
-    private static string PrintEntries(LedgerEntry[] entries, string formatted, CultureInfo culture)
-    {
-        if (entries.Length > 0)
-        {
-            var entriesForOutput = sort(entries);
-
-            for (var i = 0; i < entriesForOutput.Count(); i++)
-            {
-                formatted += "\n" + PrintEntry(culture, entriesForOutput.Skip(i).First());
-            }
+        foreach(var entry in sort(entries)) {
+            formatted += "\n" + PrintEntry(culture, entry);
         }
 
         return formatted;
