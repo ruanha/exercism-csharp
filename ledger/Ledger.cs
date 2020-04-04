@@ -79,18 +79,12 @@ public static class Ledger
         return culture;
     }
 
-    private static string PrintHead(string locale)
-    {
-        switch (locale)
+    private static string PrintHead(string locale) => locale switch
         {
-            case "en-US":
-                return "Date       | Description               | Change       ";
-            case "nl-NL":
-                return "Datum      | Omschrijving              | Verandering  ";
-            default:
-                throw new ArgumentException("Invalid locale");
-        }
-    }
+            "en-US" => "Date       | Description               | Change       ",
+            "nl-NL" => "Datum      | Omschrijving              | Verandering  ",
+            _       => throw new ArgumentException("Invalid locale")
+        };
 
     private static string Date(IFormatProvider culture, DateTime date) => date.ToString("d", culture);
 
