@@ -27,46 +27,27 @@ public static class Ledger
 
     private static void CreateCulture(string currency, string locale)
     {
-        string datPat = null;
-
-        if (currency == "USD")
-        {
-            if (locale == "en-US")
-            {
-                datPat = "MM/dd/yyyy";
-            }
-            else if (locale == "nl-NL")
-            {
-                datPat = "dd/MM/yyyy";
-            }
-        }
-
-        if (currency == "EUR")
-        {
-            if (locale == "en-US")
-            {
-                datPat = "MM/dd/yyyy";
-            }
-            else if (locale == "nl-NL")
-            {
-                datPat = "dd/MM/yyyy";
-            }
-        }
-
         Ledger.culture = new CultureInfo(locale);
-        culture.NumberFormat.CurrencySymbol = setCurrencySymbol(currency);
-        culture.NumberFormat.CurrencyNegativePattern = setCurrencyNegativePattern(locale);
-        culture.DateTimeFormat.ShortDatePattern = datPat;
+        culture.NumberFormat.CurrencySymbol = CurrencySymbol(currency);
+        culture.NumberFormat.CurrencyNegativePattern = CurrencyNegativePattern(locale);
+        culture.DateTimeFormat.ShortDatePattern = DatePattern(locale);
     }
 
-    private static string setCurrencySymbol(string currency) => currency switch
+    private static string DatePattern(string locale) => locale switch
+    {
+        "en-US" => "MM/dd/yyyy",
+        "nl-NL" => "dd/MM/yyyy",
+        _       => throw new ArgumentException("invalid locale")
+    };
+
+    private static string CurrencySymbol(string currency) => currency switch
     {
         "USD" => "$",
         "EUR" => "€",
         _     => throw new ArgumentException("Invalid currency")
     };
 
-    private static int setCurrencyNegativePattern(string locale) => locale switch 
+    private static int CurrencyNegativePattern(string locale) => locale switch 
     {
         "en-US" => 0,
         "nl-NL" => 12,
