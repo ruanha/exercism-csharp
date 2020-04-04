@@ -64,10 +64,8 @@ public static class Ledger
     private static string Description(string description) =>
         description.Length > 25 ? description.Substring(0, 22) + "..." : description;
 
-    private static string Change(decimal cgh)
-    {
-        return cgh < 0.0m ? cgh.ToString("C", culture) : cgh.ToString("C", culture) + " ";
-    }
+    private static string Change(decimal change) => 
+        change < 0.0m ? change.ToString("C", culture) : change.ToString("C", culture) + " ";
 
     private static string PrintEntry(LedgerEntry entry) =>
         $"\n{Date(entry.Date)} | {Description(entry.Description),-25} | {Change(entry.Change),13}";
