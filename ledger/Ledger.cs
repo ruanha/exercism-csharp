@@ -19,6 +19,7 @@ public class LedgerEntry
 
 public static class Ledger
 {
+    private static CultureInfo culture;
     public static LedgerEntry CreateEntry(string date, string desc, int chng)
     {
         return new LedgerEntry(DateTime.Parse(date, CultureInfo.InvariantCulture), desc, chng / 100.0m);
@@ -86,7 +87,7 @@ public static class Ledger
             _       => throw new ArgumentException("Invalid locale")
         };
 
-    private static string Date(IFormatProvider culture, DateTime date) => date.ToString("d", culture);
+    private static string Date(DateTime date) => date.ToString("d", culture);
 
     private static string Description(string desc)
     {
@@ -100,17 +101,17 @@ public static class Ledger
         return desc;
     }
 
-    private static string Change(IFormatProvider culture, decimal cgh)
+    private static string Change(decimal cgh)
     {
         return cgh < 0.0m ? cgh.ToString("C", culture) : cgh.ToString("C", culture) + " ";
     }
 
-    private static string PrintEntry(IFormatProvider culture, LedgerEntry entry)
+    private static string PrintEntry(LedgerEntry entry)
     {
         var formatted = "";
-        var date = Date(culture, entry.Date);
+        var date = Date(entry.Date);
         var description = Description(entry.Description);
-        var change = Change(culture, entry.Change);
+        var change = Change(entry.Change);
 
         formatted += date;
         formatted += " | ";
@@ -137,11 +138,11 @@ public static class Ledger
     public static string Format(string currency, string locale, LedgerEntry[] entries)
     {
         string formatted = PrintHead(locale);
-        var culture = CreateCulture(currency, locale);
+        culture = CreateCulture(currency, locale);
 
         foreach (var entry in sort(entries))
         {
-            formatted += "\n" + PrintEntry(culture, entry);
+            formatted += "\n" + PrintEntry(entry);
         }
 
         return formatted;
