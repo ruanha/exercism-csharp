@@ -25,58 +25,68 @@ public static class Ledger
         return new LedgerEntry(DateTime.Parse(date, CultureInfo.InvariantCulture), desc, chng / 100.0m);
     }
 
-    private static void CreateCulture(string cur, string loc)
+    private static void CreateCulture(string currency, string locale)
     {
         string curSymb = null;
         int curNeg = 0;
         string datPat = null;
 
-        if (cur != "USD" && cur != "EUR")
+        if (currency == "USD")
+        {
+            if (locale == "en-US")
+            {
+                curSymb = "$";
+                datPat = "MM/dd/yyyy";
+            }
+            else if (locale == "nl-NL")
+            {
+                curSymb = "$";
+                curNeg = 12;
+                datPat = "dd/MM/yyyy";
+            }
+        }
+
+        if (currency == "EUR")
+        {
+            if (locale == "en-US")
+            {
+                curSymb = "€";
+                datPat = "MM/dd/yyyy";
+            }
+            else if (locale == "nl-NL")
+            {
+                curSymb = "€";
+                curNeg = 12;
+                datPat = "dd/MM/yyyy";
+            }
+        }
+
+        Ledger.culture = new CultureInfo(locale);
+        culture.NumberFormat.CurrencySymbol = setCurrencySymbol(currency);
+        culture.NumberFormat.CurrencyNegativePattern = curNeg;
+        culture.DateTimeFormat.ShortDatePattern = datPat;
+    }
+
+    private static string setCurrencySymbol(string currency) => currency switch
+    {
+        "USD" => "$",
+        "EUR" => "€",
+        _     => throw new ArgumentException("Invalid currency")
+    };
+        
+
+    private static bool isValidCulture(string currency, string locale)
+    {
+        if (currency != "USD" && currency != "EUR")
         {
             throw new ArgumentException("Invalid currency");
         }
-        else
+
+        if (locale != "nl-NL" && locale != "en-US")
         {
-            if (loc != "nl-NL" && loc != "en-US")
-            {
-                throw new ArgumentException("Invalid currency");
-            }
-
-            if (cur == "USD")
-            {
-                if (loc == "en-US")
-                {
-                    curSymb = "$";
-                    datPat = "MM/dd/yyyy";
-                }
-                else if (loc == "nl-NL")
-                {
-                    curSymb = "$";
-                    curNeg = 12;
-                    datPat = "dd/MM/yyyy";
-                }
-            }
-
-            if (cur == "EUR")
-            {
-                if (loc == "en-US")
-                {
-                    curSymb = "€";
-                    datPat = "MM/dd/yyyy";
-                }
-                else if (loc == "nl-NL")
-                {
-                    curSymb = "€";
-                    curNeg = 12;
-                    datPat = "dd/MM/yyyy";
-                }
-            }
+            throw new ArgumentException("Invalid currency");
         }
-
-        Ledger.culture = new CultureInfo(loc);
-        culture.NumberFormat.CurrencySymbol = curSymb;
-        culture.NumberFormat.CurrencyNegativePattern = curNeg;
-        culture.DateTimeFormat.ShortDatePattern = datPat;
+        return true;
     }
 
     private static string PrintHead(string locale) => locale switch
