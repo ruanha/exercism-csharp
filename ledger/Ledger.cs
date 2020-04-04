@@ -27,21 +27,16 @@ public static class Ledger
 
     private static void CreateCulture(string currency, string locale)
     {
-        string curSymb = null;
-        int curNeg = 0;
         string datPat = null;
 
         if (currency == "USD")
         {
             if (locale == "en-US")
             {
-                curSymb = "$";
                 datPat = "MM/dd/yyyy";
             }
             else if (locale == "nl-NL")
             {
-                curSymb = "$";
-                curNeg = 12;
                 datPat = "dd/MM/yyyy";
             }
         }
@@ -50,20 +45,17 @@ public static class Ledger
         {
             if (locale == "en-US")
             {
-                curSymb = "€";
                 datPat = "MM/dd/yyyy";
             }
             else if (locale == "nl-NL")
             {
-                curSymb = "€";
-                curNeg = 12;
                 datPat = "dd/MM/yyyy";
             }
         }
 
         Ledger.culture = new CultureInfo(locale);
         culture.NumberFormat.CurrencySymbol = setCurrencySymbol(currency);
-        culture.NumberFormat.CurrencyNegativePattern = curNeg;
+        culture.NumberFormat.CurrencyNegativePattern = setCurrencyNegativePattern(locale);
         culture.DateTimeFormat.ShortDatePattern = datPat;
     }
 
@@ -73,21 +65,14 @@ public static class Ledger
         "EUR" => "€",
         _     => throw new ArgumentException("Invalid currency")
     };
-        
 
-    private static bool isValidCulture(string currency, string locale)
+    private static int setCurrencyNegativePattern(string locale) => locale switch 
     {
-        if (currency != "USD" && currency != "EUR")
-        {
-            throw new ArgumentException("Invalid currency");
-        }
-
-        if (locale != "nl-NL" && locale != "en-US")
-        {
-            throw new ArgumentException("Invalid currency");
-        }
-        return true;
-    }
+        "en-US" => 0,
+        "nl-NL" => 12,
+        _       => throw new ArgumentException("invalid locale")
+    };
+        
 
     private static string PrintHead(string locale) => locale switch
         {
