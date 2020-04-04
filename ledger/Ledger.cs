@@ -20,10 +20,8 @@ public class LedgerEntry
 public static class Ledger
 {
     private static CultureInfo culture;
-    public static LedgerEntry CreateEntry(string date, string desc, int chng)
-    {
-        return new LedgerEntry(DateTime.Parse(date, CultureInfo.InvariantCulture), desc, chng / 100.0m);
-    }
+    public static LedgerEntry CreateEntry(string date, string desc, int chng) =>
+        new LedgerEntry(DateTime.Parse(date, CultureInfo.InvariantCulture), desc, chng / 100.0m);
 
     private static void CreateCulture(string currency, string locale)
     {
@@ -32,13 +30,6 @@ public static class Ledger
         culture.NumberFormat.CurrencyNegativePattern = CurrencyNegativePattern(locale);
         culture.DateTimeFormat.ShortDatePattern = DatePattern(locale);
     }
-
-    private static string DatePattern(string locale) => locale switch
-    {
-        "en-US" => "MM/dd/yyyy",
-        "nl-NL" => "dd/MM/yyyy",
-        _       => throw new ArgumentException("invalid locale")
-    };
 
     private static string CurrencySymbol(string currency) => currency switch
     {
@@ -54,6 +45,12 @@ public static class Ledger
         _       => throw new ArgumentException("invalid locale")
     };
         
+    private static string DatePattern(string locale) => locale switch
+    {
+        "en-US" => "MM/dd/yyyy",
+        "nl-NL" => "dd/MM/yyyy",
+        _       => throw new ArgumentException("invalid locale")
+    };
 
     private static string PrintHead(string locale) => locale switch
         {
@@ -64,17 +61,8 @@ public static class Ledger
 
     private static string Date(DateTime date) => date.ToString("d", culture);
 
-    private static string Description(string desc)
-    {
-        if (desc.Length > 25)
-        {
-            var trunc = desc.Substring(0, 22);
-            trunc += "...";
-            return trunc;
-        }
-
-        return desc;
-    }
+    private static string Description(string description) =>
+        description.Length > 25 ? description.Substring(0, 22) + "..." : description;
 
     private static string Change(decimal cgh)
     {
