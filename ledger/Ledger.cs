@@ -25,7 +25,7 @@ public static class Ledger
         return new LedgerEntry(DateTime.Parse(date, CultureInfo.InvariantCulture), desc, chng / 100.0m);
     }
 
-    private static CultureInfo CreateCulture(string cur, string loc)
+    private static void CreateCulture(string cur, string loc)
     {
         string curSymb = null;
         int curNeg = 0;
@@ -73,11 +73,10 @@ public static class Ledger
             }
         }
 
-        var culture = new CultureInfo(loc);
+        Ledger.culture = new CultureInfo(loc);
         culture.NumberFormat.CurrencySymbol = curSymb;
         culture.NumberFormat.CurrencyNegativePattern = curNeg;
         culture.DateTimeFormat.ShortDatePattern = datPat;
-        return culture;
     }
 
     private static string PrintHead(string locale) => locale switch
@@ -137,9 +136,9 @@ public static class Ledger
 
     public static string Format(string currency, string locale, LedgerEntry[] entries)
     {
+        CreateCulture(currency, locale);
+        
         string formatted = PrintHead(locale);
-        culture = CreateCulture(currency, locale);
-
         foreach (var entry in sort(entries))
         {
             formatted += "\n" + PrintEntry(entry);
