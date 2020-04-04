@@ -105,26 +105,14 @@ public static class Ledger
         return cgh < 0.0m ? cgh.ToString("C", culture) : cgh.ToString("C", culture) + " ";
     }
 
-    private static string PrintEntry(LedgerEntry entry)
-    {
-        var formatted = "\n";
-        var date = Date(entry.Date);
-        var description = Description(entry.Description);
-        var change = Change(entry.Change);
+    private static string PrintEntry(LedgerEntry entry) =>
+        $"\n{Date(entry.Date)} | {Description(entry.Description),-25} | {Change(entry.Change),13}";
 
-        formatted += date;
-        formatted += " | ";
-        formatted += string.Format("{0,-25}", description);
-        formatted += " | ";
-        formatted += string.Format("{0,13}", change);
-
-        return formatted;
-    }
 
 
     private static IEnumerable<LedgerEntry> sort(LedgerEntry[] entries) => entries
-        .OrderBy(e => e.Change)
-        .OrderBy(x => x.Date + "@" + x.Description + "@" + x.Change)
+        .OrderBy(entry => entry.Change)
+        .OrderBy(entry => entry.Date + "@" + entry.Description + "@" + entry.Change)
         .ToArray();
 
     public static string Format(string currency, string locale, LedgerEntry[] entries)
