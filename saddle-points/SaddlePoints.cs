@@ -4,24 +4,15 @@ using System.Linq;
 
 public static class SaddlePoints
 {
-    public static IEnumerable<(int, int)> Calculate(int[,] matrix)
-    {
-        var result = new List<(int, int)>();
+    public static IEnumerable<(int, int)> Calculate(int[,] matrix) => matrix
+        .Maximums()
+        .Where(point => IsMinimumIn(point, matrix))
+        .ToOneBasedArray();
 
-        var maximums = Maximums(matrix);
-        foreach (var point in maximums) {
-            if (IsMinimumIn(point, matrix)) {
-                result.Add(point);
-            }
-        }
-
-        return ConvertToMatrixIndex(result);
-    }
-
-    private static (int, int)[] ConvertToMatrixIndex(IEnumerable<(int, int)> list) =>
+    private static (int, int)[] ToOneBasedArray(this IEnumerable<(int, int)> list) =>
         list.Select(x => (x.Item1 + 1, x.Item2 + 1) ).ToArray();
 
-    private static List<(int, int)> Maximums(int[,] matrix) {
+    private static List<(int, int)> Maximums(this int[,] matrix) {
         var result = new List<(int, int)>();
 
         for (int i = 0; i < matrix.GetLength(0); i++) {
