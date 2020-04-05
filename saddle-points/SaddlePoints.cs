@@ -8,9 +8,6 @@ public static class SaddlePoints
     {
         var result = new List<(int, int)>();
 
-        var numberOfRows = matrix.GetLength(0);
-        var numberOfCols = matrix.GetLength(1);
-
         var maximums = Maximums(matrix);
         foreach (var point in maximums) {
             if (IsMinimumIn(point, matrix)) {
@@ -18,8 +15,11 @@ public static class SaddlePoints
             }
         }
 
-        return result.Select(x => (x.Item1 + 1, x.Item2 + 1) ).ToArray();
+        return ConvertToMatrixIndex(result);
     }
+
+    private static (int, int)[] ConvertToMatrixIndex(IEnumerable<(int, int)> list) =>
+        list.Select(x => (x.Item1 + 1, x.Item2 + 1) ).ToArray();
 
     private static List<(int, int)> Maximums(int[,] matrix) {
         var result = new List<(int, int)>();
