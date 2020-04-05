@@ -21,70 +21,64 @@ public struct RationalNumber
             numerator *= -1;
             denominator *= -1;
         }
-        this.numerator = numerator;
-        this.denominator = denominator;
+        var gcd = GreatestCommonFactor(numerator, denominator);
+        if (numerator == 0) denominator = 1;
+        this.numerator = numerator / gcd;
+        this.denominator = denominator / gcd;
     }
     
     public static RationalNumber operator +(RationalNumber r1, RationalNumber r2) =>
         new RationalNumber(
             r1.numerator * r2.denominator + r2.numerator * r1.denominator,
-            r1.denominator * r2.denominator)
-            .Reduce();
+            r1.denominator * r2.denominator);
 
     public static RationalNumber operator -(RationalNumber r1, RationalNumber r2) =>
         new RationalNumber(
             r1.numerator * r2.denominator - r2.numerator * r1.denominator,
-            r1.denominator * r2.denominator)
-            .Reduce();
+            r1.denominator * r2.denominator);
 
     public static RationalNumber operator *(RationalNumber r1, RationalNumber r2) =>
         new RationalNumber(
             r1.numerator * r2.numerator,
-            r1.denominator * r2.denominator)
-            .Reduce();
+            r1.denominator * r2.denominator);
 
     public static RationalNumber operator /(RationalNumber r1, RationalNumber r2) =>
         new RationalNumber(
             r1.numerator * r2.denominator,
-            r2.numerator * r1.denominator)
-            .Reduce();
+            r2.numerator * r1.denominator);
 
     public RationalNumber Abs() =>
         new RationalNumber(
             Math.Abs(numerator),
-            Math.Abs(denominator))
-            .Reduce();
+            Math.Abs(denominator));
 
-    public RationalNumber Reduce()
+    public RationalNumber Reduce() => this;
+
+    private static int GreatestCommonFactor(int num, int den)
     {
-        int factor = GreatesCommonFactor();
-        if (numerator == 0) denominator = 1;
-        numerator /= factor;
-        denominator /= factor;
-        return new RationalNumber(numerator, denominator);
-    }
+        int n = Math.Abs(num);
+        var numeratorFactors = Factors(n);
 
-    private readonly int GreatesCommonFactor()
-    {
-        var numeratorFactors = Factors(numerator);
-        var denominatorFactors = Factors(denominator);
+        int d = Math.Abs(den);
+        var denominatorFactors = Enumerable
+            .Range(2, d)
+            .Where(x => d % x == 0).ToList();
 
-        var greatestFactor = numeratorFactors
+        var factor = numeratorFactors
             .FirstOrDefault(x => denominatorFactors.Contains(x));
 
-        return (greatestFactor == 0) ? 1 : greatestFactor;
+        if (factor == 0) factor = 1;
+        return factor;
     }
 
-    private readonly List<int> Factors(int number) {
-        int n = Math.Abs(number);
-        return Enumerable.Range(2, n).Where(x => n % x == 0).ToList();
+    private static List<int> Factors(int number) {
+        return Enumerable.Range(2, number).Where(x => number % x == 0).ToList();
     }
 
     public RationalNumber Exprational(int power) =>
         new RationalNumber(
             (int)Math.Pow((double)numerator, Math.Abs(power)),
-            (int)Math.Pow((double)denominator, Math.Abs(power)))
-            .Reduce();
+            (int)Math.Pow((double)denominator, Math.Abs(power)));
 
     public double Expreal(int baseNumber) =>
         Math.Pow(Math.Pow(baseNumber, 1.0 / denominator), numerator);
