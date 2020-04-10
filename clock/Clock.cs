@@ -1,6 +1,7 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
-public class Clock
+public class Clock : IEquatable<Clock>
 {
     private int _minutes { get; set; }
     private int _hours { get; set; }
@@ -9,16 +10,15 @@ public class Clock
         _hours = hours;
         _minutes = minutes;
     }
-
+    
     public Clock Add(int minutesToAdd)
     {
-        _minutes += minutesToAdd;
-        return this;
+        return new Clock(_hours, _minutes + minutesToAdd);
     }
 
     public Clock Subtract(int minutesToSubtract)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        return new Clock(_hours, _minutes - minutesToSubtract);
     }
 
     public override string ToString()
@@ -36,11 +36,15 @@ public class Clock
             hours++;
         }
 
-
         if (hours < 0) {
             hours = 24 - (Math.Abs(hours)%24);
         }
 
         return (hours%24).ToString("D2") + ":" + minutes.ToString("D2");
+    }
+
+    public bool Equals([AllowNull] Clock other)
+    {
+        return this.ToString() == other.ToString();
     }
 }
