@@ -5,14 +5,11 @@ using System.Linq;
 public static class SaddlePoints
 {
     public static IEnumerable<(int, int)> Calculate(int[,] matrix) => matrix
-        .Maximums()
-        .Where(point => IsMinimumIn(point, matrix))
+        .RowMaximums()
+        .Where(point => matrix.IsColumnMinimum(point))
         .ToOneBasedArray();
 
-    private static (int, int)[] ToOneBasedArray(this IEnumerable<(int, int)> list) =>
-        list.Select(x => (x.Item1 + 1, x.Item2 + 1) ).ToArray();
-
-    private static List<(int, int)> Maximums(this int[,] matrix) {
+    private static List<(int, int)> RowMaximums(this int[,] matrix) {
         var result = new List<(int, int)>();
 
         for (int i = 0; i < matrix.GetLength(0); i++) {
@@ -35,14 +32,17 @@ public static class SaddlePoints
         return result;
     }
 
-    private static bool IsMinimumIn((int, int) point,int[,] matrix) {
-        var value = matrix[point.Item1, point.Item2];
+    private static bool IsColumnMinimum(this int[,] matrix, (int, int) point) {
+        int valueAtPoint = matrix[point.Item1, point.Item2];
 
         for (int i = 0; i < matrix.GetLength(0); i++) {
-            if (matrix[i, point.Item2] < value) {
+            if (matrix[i, point.Item2] < valueAtPoint) {
                 return false;
             }
         }
         return true;
     }
+
+    private static (int, int)[] ToOneBasedArray(this IEnumerable<(int, int)> list) =>
+        list.Select(x => (x.Item1 + 1, x.Item2 + 1) ).ToArray();
 }
