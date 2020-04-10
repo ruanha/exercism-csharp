@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 public class Clock : IEquatable<Clock>
 {
@@ -43,7 +42,7 @@ public class Clock : IEquatable<Clock>
         return (hours%24).ToString("D2") + ":" + minutes.ToString("D2");
     }
 
-    public bool Equals([AllowNull] Clock other)
+    public bool Equals(Clock other)
     {
         return this.ToString() == other.ToString();
     }
