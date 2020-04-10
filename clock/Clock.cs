@@ -25,6 +25,10 @@ public class Clock
     {
         var minutes = _minutes;
         var hours = _hours;
+
+        if (hours < 0) {
+            hours = 24 - Math.Abs(hours)%24;
+        }
         while(minutes >= 60) {
             minutes -= 60;
             hours++;
