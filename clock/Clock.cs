@@ -26,13 +26,21 @@ public class Clock
         var minutes = _minutes;
         var hours = _hours;
 
-        if (hours < 0) {
-            hours = 24 - Math.Abs(hours)%24;
+        while(minutes < 0 ) {
+            minutes += 60;
+            hours--;
         }
+
         while(minutes >= 60) {
             minutes -= 60;
             hours++;
         }
+
+
+        if (hours < 0) {
+            hours = 24 - (Math.Abs(hours)%24);
+        }
+
         return (hours%24).ToString("D2") + ":" + minutes.ToString("D2");
     }
 }
