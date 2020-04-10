@@ -26,7 +26,7 @@ public class Clock
         var minutes = _minutes;
         var hours = _hours;
         while(minutes >= 60) {
-            minutes %= 60;
+            minutes -= 60;
             hours++;
         }
         return (hours%24).ToString("D2") + ":" + minutes.ToString("D2");
