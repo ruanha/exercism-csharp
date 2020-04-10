@@ -5,7 +5,7 @@ public class Clock
     private int hours;
     public int Hours
     {
-        get { return hours; }
+        get { return hours%24; }
         set { hours = value; }
     }
 
