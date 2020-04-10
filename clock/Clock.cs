@@ -2,30 +2,18 @@ using System;
 
 public class Clock
 {
-    private int hours;
-    public int Hours
-    {
-        get { return hours%24; }
-        set { hours = value; }
-    }
-
-    private int minutes;
-    public int Minutes
-    {
-        get { return minutes; }
-        set { minutes = value; }
-    }
-    
-    
+    private int _minutes { get; set; }
+    private int _hours { get; set; }
     public Clock(int hours, int minutes)
     {
-        Hours = hours;
-        Minutes = minutes;
+        _hours = hours;
+        _minutes = minutes;
     }
 
     public Clock Add(int minutesToAdd)
     {
-        throw new NotImplementedException("You need to implement this function.");
+        _minutes += minutesToAdd;
+        return this;
     }
 
     public Clock Subtract(int minutesToSubtract)
@@ -35,6 +23,7 @@ public class Clock
 
     public override string ToString()
     {
-        return Hours.ToString("D2") + ":" + Minutes.ToString("D2");
+
+        return (_hours%24).ToString("D2") + ":" + _minutes.ToString("D2");
     } 
 }
