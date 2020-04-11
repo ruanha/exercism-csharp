@@ -2,29 +2,10 @@ using System;
 
 public class Clock : IEquatable<Clock>
 {
-    private int _minutes { get; set; }
-    private int _hours { get; set; }
+    readonly int _minutes;
+    readonly int _hours;
     public Clock(int hours, int minutes)
     {
-        _hours = hours;
-        _minutes = minutes;
-    }
-    
-    public Clock Add(int minutesToAdd)
-    {
-        return new Clock(_hours, _minutes + minutesToAdd);
-    }
-
-    public Clock Subtract(int minutesToSubtract)
-    {
-        return new Clock(_hours, _minutes - minutesToSubtract);
-    }
-
-    public override string ToString()
-    {
-        var minutes = _minutes;
-        var hours = _hours;
-
         while(minutes < 0 ) {
             minutes += 60;
             hours--;
@@ -39,7 +20,23 @@ public class Clock : IEquatable<Clock>
             hours = 24 - (Math.Abs(hours)%24);
         }
 
-        return (hours%24).ToString("D2") + ":" + minutes.ToString("D2");
+        _hours = hours % 24;
+        _minutes = minutes % 60;   
+    }
+    
+    public Clock Add(int minutesToAdd)
+    {
+        return new Clock(_hours, _minutes + minutesToAdd);
+    }
+
+    public Clock Subtract(int minutesToSubtract)
+    {
+        return new Clock(_hours, _minutes - minutesToSubtract);
+    }
+
+    public override string ToString()
+    {
+        return $"{_hours.ToString("D2")}:{_minutes.ToString("D2")}";
     }
 
     public bool Equals(Clock other)
