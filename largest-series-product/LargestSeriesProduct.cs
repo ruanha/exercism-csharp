@@ -11,21 +11,16 @@ public static class LargestSeriesProduct
 
         var numbers = digits.Select(c => (int)Char.GetNumericValue(c));
 
-        long largest = 0;
-        for (int i = 0; i <= digits.Count() - span; i++) {
-            var slice = numbers.Skip(i).Take(span);
-            if (slice.Product() > largest) {
-                largest = slice.Product();
-            }
-        }
-        return largest;
+        var range = Enumerable.Range(0, digits.Length - span + 1);
+
+        return range.Select  (i => numbers
+                    .Skip    (i)
+                    .Take    (span)
+                    .Product ())
+                    .Max     ()
+                    ;
     } 
 
-    private static int Product(this IEnumerable<int> slice) {
-        int result = 1;
-        foreach (int digit in slice){
-            result *= digit;
-        }
-        return result;
-     }
+    private static int Product(this IEnumerable<int> slice) => 
+        slice.Aggregate(1, (i, p) => i * p);
 }
