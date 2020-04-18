@@ -6,9 +6,10 @@ public static class LargestSeriesProduct
 {
     public static long GetLargestProduct(string digits, int span) 
     {
-        if (span > digits.Length || span < 0) throw new ArgumentException();
+        if (span > digits.Length || span < 0 || digits.Any(c => Char.GetNumericValue(c) < 0 ))
+            throw new ArgumentException();
 
-        var numbers = ConvertToIntegerList(digits);
+        var numbers = digits.Select(c => (int)Char.GetNumericValue(c));
 
         long largest = 0;
         for (int i = 0; i <= digits.Count() - span; i++) {
@@ -19,20 +20,6 @@ public static class LargestSeriesProduct
         }
         return largest;
     } 
-
-    private static List<int> ConvertToIntegerList(string digits) {
-        var digitsList = new List<int>();
-        foreach (char digit in digits) {
-            var numericValue = char.GetNumericValue(digit);
-            if (numericValue >= 0) {
-                digitsList.Add((int) numericValue);
-            }
-            else {
-                throw new ArgumentException();
-            }
-        }
-        return digitsList;
-    }
 
     private static int Product(this IEnumerable<int> slice) {
         int result = 1;
